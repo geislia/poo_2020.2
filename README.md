@@ -1,4 +1,4 @@
-# Repositório da Disciplina de POO (JAVA :coffee:)
+# Repositório da Disciplina de POO (Programação Orientada a Objeto) (JAVA :coffee:)
 
 ## Links Importantes 
 
