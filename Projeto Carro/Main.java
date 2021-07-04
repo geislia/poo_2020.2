@@ -1,73 +1,54 @@
+package br.ufc.qx;
 
-import java.util.Scanner;
+public class Runner {
 
-public class Main {
+    public static void main(final String[] args) {
+        //Criando um carro
+        Carro carro = new Carro();
+        System.out.println(carro); // Carro{passageiros=0, combustivel=0, quilometragem=0}
 
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		Carro bumblebee = new Carro();
-		
-		System.out.println("###################################################");
-		System.out.println("#  O comando \"$in\" insere uma pessoa no carro.    #");
-		System.out.println("#  O comando \"$out\" retira uma pessoa do carro.   #");
-		System.out.println("#  O comando \"$show\" mostra o estado do carro.    #");
-		System.out.println("#  O comando \"$fuel 10\" adiciona 10 l de gas.     #");
-		System.out.println("#  O comando \"$drive 10\" dirige 10 km.            #");
-		System.out.println("#  O comando \"$end\" encerra o programa.           #");
-		System.out.println("###################################################");
-		System.out.println("");
-		
-		while(true) {
-			String cmd[] = scanner.nextLine().split(" ");
-			
-			if(cmd[0].equalsIgnoreCase("$in")) {
-				bumblebee.in();
-			}
-			else if(cmd[0].equalsIgnoreCase("$out")){
-				bumblebee.out();
-			}
-			else if(cmd[0].equalsIgnoreCase("$show")){
-				System.out.println(bumblebee);
-			}
-			else if(cmd[0].equalsIgnoreCase("$fuel")){
-				
-				if(cmd.length == 1) {
-					System.out.println("fail: Valor de gasolina n�o informado");
-					System.out.println("ex.: $fuel 10");
-				}
-				else {
-					int gas = Integer.parseInt(cmd[1]);
-					bumblebee.fuel(gas);
-				}
-			}
-			else if(cmd[0].equalsIgnoreCase("$drive")) {
-				
-				if(cmd.length == 1) {
-					System.out.println("fail: Valor de Km n�o informado");
-					System.out.println("ex.: $drive 10");
-				}
-				else {
-					int km = Integer.parseInt(cmd[1]);
-					bumblebee.drive(km);
-				}
-			}
-			else if(cmd[0].equalsIgnoreCase("$end")) {
-				System.out.println("� hora de dar tchauu!!");
-				break;
-			}
-			else {
-				System.out.println("Este comando n�o existe");
-				System.out.println("###################################################");
-				System.out.println("#  O comando \"$in\" insere uma pessoa no carro.    #");
-				System.out.println("#  O comando \"$out\" retira uma pessoa do carro.   #");
-				System.out.println("#  O comando \"$show\" mostra o estado do carro.    #");
-				System.out.println("#  O comando \"$fuel 10\" adiciona 10 l de gas.     #");
-				System.out.println("#  O comando \"$drive 10\" dirige 10 km.            #");
-				System.out.println("#  O comando \"$end\" encerra o programa.           #");
-				System.out.println("###################################################");
-			}
-		}
+        //Embarcando duas pessoas
+        carro.embarcar();
+        carro.embarcar();
+        System.out.println(carro); // Carro{passageiros=2, combustivel=0, quilometragem=0}
 
-	}
+        //Tentando embarcar mais uma pessoas
+        if(!carro.embarcar()) {
+            System.out.println("Não foi possível realizar o embarque"); // Não foi possível realizar o embarque
+        }
 
+        //Desembarcando
+        carro.desembarcar();
+        carro.desembarcar();
+        if(!carro.desembarcar()) {
+            System.out.println("Não foi possível desembarcar"); // Não foi possível desembarcar
+        }
+
+        //Abastecendo
+        carro.abastecer(60);
+        System.out.println(carro); // Carro{passageiros=0, combustivel=60, quilometragem=0}
+
+        //Dirigir
+        if(!carro.dirigir(10)) {
+            System.out.println("Não foi possível dirigir porque o carro estava vazio"); // Não foi possível dirigir porque o carro estava vazio
+        }
+
+        //Embarcando e dirigindo
+        carro.embarcar();
+        carro.dirigir(10);
+        System.out.println(carro); // Carro{passageiros=1, combustivel=50, quilometragem=10}
+
+        // Dirigindo até acabar o combustível
+        int quilometragemAntigo = carro.getQuilometragem();
+        if(!carro.dirigir(70)) {
+            int distancia = carro.getQuilometragem() - quilometragemAntigo;
+            System.out.println("O combustível acabou ao percorrer " + distancia + " kms"); // O combustível acabou ao percorrer 50 kms
+        }
+        System.out.println(carro); // Carro{passageiros=1, combustivel=0, quilometragem=60}
+
+        // Abastecendo
+        carro.abastecer(200); 
+        System.out.println(carro); // Carro{passageiros=1, combustivel=100, quilometragem=60}
+
+    }
 }
